@@ -5,9 +5,19 @@ import cv2
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 from PIL import Image
+from fastapi.middleware.cors import CORSMiddleware
 import io
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # React's development server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 cnn = tf.keras.models.load_model('trained_plant_disease_model.keras')
 
